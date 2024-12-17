@@ -19,3 +19,18 @@ When writing part 2, I found that it was actually not possible to have a LIST re
 
 If I was to use a list, im sure it would be possible to reverse the output from the program in memory, but this would be done client side rather than using redis itself. I have included the code from this mistake incase you are interested, but I would not use it.
 
+Once I adjusted my scripts to use a sorted set, I wrote the member and the value the same as I needed to fill both datatypes
+
+The rest worked relatively simply 
+<img width="652" alt="Screenshot 2024-12-17 at 23 53 35" src="https://github.com/user-attachments/assets/681c8de6-bb60-44d8-b5b5-9c7c43475f04" />
+
+And I read the numbers back out from server B
+
+![Screenshot 2024-12-17 at 23 52 26](https://github.com/user-attachments/assets/db3ff7ef-6188-4c5e-9b7e-0fa0d53eeff5)
+
+> Explore the data using Redis Insight.
+
+The data is all visible inside my numbers_zset in redis insights too
+
+![462564269_1347816476184792_4171998284184787057_n](https://github.com/user-attachments/assets/a0cd9cca-db40-46b7-a9ce-066ac1c8be4f)
+
