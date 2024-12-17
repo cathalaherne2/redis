@@ -10,9 +10,12 @@ When looking into this though, I can see its not the correct data choice as I ne
 
 Next thing I looked at was a "LIST", when I take a look at the possible commands, I can see that both "LPUSH" and "RPUSH" would allow me to either Preappend or Append to the database the data that I am looking to write.
 
-One thing that I am expecting is that because I have old data in the database from challenge A, and because I am using the same setup from part A, I may have some mixed up data. I dont want to delete this data right now, but will do this if I need to.
-
 This script worked and I could see the data in redis insights:
 
 ![462581871_552641597742506_3471687155673526916_n](https://github.com/user-attachments/assets/c288c395-92a6-4a5f-9255-952b10aa237c)
+
+
+When writing part 2, I found that it was actually not possible to have a LIST return its data in reverse order, and as such, I would infact need to go back to sorted sets.
+
+If I was to use a list, im sure it would be possible to reverse the output from the program in memory, but this would be done client side rather than using redis itself. I have included the code from this mistake incase you are interested, but I would not use it.
 
