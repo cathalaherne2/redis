@@ -1,8 +1,8 @@
 # redis
-hiring exercise for the Redis team
+Hiring Exercise for the Redis team
 
-
-# Part 0: ensure authentication
+---
+## Part 0: ensure authentication
 
 step 0 was straightfoward, downloading SSH key, adjusting its permissions to ``chmod 400`` and SSHing with the command: ``ssh -i techChallengeKey-1.pem azureuser@123.45.67.89``
 
@@ -12,10 +12,10 @@ to confirm for any later OS differences, I confirmed the OS I was running was Re
 
 <img width="730" alt="Screenshot 2024-12-17 at 19 47 16" src="https://github.com/user-attachments/assets/15339d3e-209e-4dfe-9512-73510d6003ef" />
 
-# Part 1: Installing Redis community edition
+## Part 1: Installing Redis community edition
 
 >Install standalone Redis Community Edition on Server A.
-
+---
 First thing I did was to update yum to ensure I am resolving any dependancies correctly. I then checked the [redis website](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/install-redis-on-linux/) and saw the following commands:
 
 ```
@@ -25,10 +25,10 @@ sudo systemctl start redis
 ```
 I ran these commands and so redis was installed and is enabled as a systemctl process and will restart if I shut down the machine
 
-# Part 2: Modify the config as needed
+## Part 2: Modify the config as needed
 
 >  Change the default port from default 6379 to something else
-
+---
 To do this I edited the file with
 
 ```
@@ -98,10 +98,10 @@ I fixed this by adding a rule to allow 6123 communication (initally on the wrong
 
 <img width="1512" alt="Screenshot 2024-12-17 at 20 54 22" src="https://github.com/user-attachments/assets/1bc4a084-850f-494b-a09c-f592f902eaef" />
 
-# Part 3: Installing Redis software (redis Enterprise) on server B
+## Part 3: Installing Redis software (redis Enterprise) on server B
 
 >Download and install Redis Software (Redis Enterprise, latest version for RHEL 9) on Server B.
-
+---
 while I could download the software from the console, i was looking for a command I could use to install it via the CLI
 
 ![Screenshot 2024-12-17 at 20 59 27](https://github.com/user-attachments/assets/19446990-70ef-479c-9ab2-009ffda21efb)
@@ -122,7 +122,8 @@ this didnt seem to fix the issue, so I am going to try and stop the process enti
 
 this worked and I was able to install redis
 
-> step 4: setup Redis enterprise on that server
+>step 4: setup Redis enterprise on that server
+---
 <img width="1232" alt="Screenshot 2024-12-17 at 21 28 00" src="https://github.com/user-attachments/assets/ae155116-5db1-450f-a893-c524fe162660" />
 
 I Created a cluster from scratch within the UI and see the following prompt:
@@ -137,7 +138,7 @@ I left the rest of this as default:
 I am now authenticated and installed
 
 >step 5: create a redis database on the enterprise cluster:
-
+---
 this was relatively simple, I have the database a name of "redistest" the only other step I did was to ensure there was a password on the Database so that I could secure the cluster.
 
 ![Screenshot 2024-12-17 at 21 30 35](https://github.com/user-attachments/assets/69175a42-a8c1-4ef1-8b98-d0a6e0d9fca3)
@@ -147,13 +148,13 @@ one thing I can see that I think I missed a step on earlier is "(using no DNS op
 <img width="1283" alt="Screenshot 2024-12-17 at 21 54 50" src="https://github.com/user-attachments/assets/aff6a8e7-179a-4bea-b075-eed2855e6a57" />
 
 > Find and use memtier-benchmark
-
+---
 I hadnt heard of this tool previously, so I googled the instructions and read the [following](https://redis.io/blog/memtier_benchmark-a-high-throughput-benchmarking-tool-for-redis-memcached/)
 and found the [following link](https://redis.io/docs/latest/operate/rs/clusters/optimize/memtier-benchmark/) 
 
 I had the test run with the following command
 
-```
+``` bash
 /opt/redislabs/bin/memtier_benchmark -s $DB_HOST -p $DB_PORT -a $DB_PASSWORD -t 4 -R --ratio=1:1
 
 ```
@@ -168,7 +169,7 @@ After this test was run, I used redis insights to confirm that this data is stor
 ![462642827_874084291261529_2762838153478665611_n](https://github.com/user-attachments/assets/04e25b00-0697-4b70-8249-968251d06f4d)
 
 > step 7: Congure the Redis Enterprise database with the “Replica Of geo-distributed Redis” feature
-
+---
 I created a database named "geo-replica-db"
 
 and I used the "replica of" parameter to set the redis url of "redis://:<password>@4.234.124.79:6123"
