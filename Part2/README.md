@@ -34,3 +34,16 @@ The data is all visible inside my numbers_zset in redis insights too
 
 ![462564269_1347816476184792_4171998284184787057_n](https://github.com/user-attachments/assets/a0cd9cca-db40-46b7-a9ce-066ac1c8be4f)
 
+> What would you do to insert a lot of values (like hundreds of millions) with multiple threads and clients
+and read and print those in reverse order from consumer clients?
+
+(I assume that you are not looking for a code example of writing 100 million datapoints to a cache, so I will speak hypothetically)
+
+If I wanted to insert hundreds of millions of values to a Redis cluster, the first thing I would look at is multithreading the application.
+
+To do this, I would seperate data into seperate chunks, so that each thread is working with its own seperate data that it will be pushing.
+
+After this, I would use redis Pipelines to batch process multiple queries to reduce the overhead we see from making millions of network calls.
+
+
+If we were seeing that there were issues with limits on the Redis side, EG not enough RAM on the server, we would look to scaling out the servers into a Redis Cluster, so that we can scale horizontally.
